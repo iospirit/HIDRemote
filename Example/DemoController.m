@@ -3,11 +3,11 @@
 //  HIDRemoteSample
 //
 //  Created by Felix Schwarz on 08.10.09.
-//  Copyright 2009 IOSPIRIT GmbH. All rights reserved.
+//  Copyright 2009-2011 IOSPIRIT GmbH. All rights reserved.
 //
 //  ** LICENSE *************************************************************************
 //
-//  Copyright (c) 2007-2009 IOSPIRIT GmbH (http://www.iospirit.com/)
+//  Copyright (c) 2007-2011 IOSPIRIT GmbH (http://www.iospirit.com/)
 //  All rights reserved.
 //  
 //  Redistribution and use in source and binary forms, with or without modification,

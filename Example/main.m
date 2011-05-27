@@ -3,7 +3,7 @@
 //  HIDRemoteSample
 //
 //  Created by Felix Schwarz on 07.10.09.
-//  Copyright 2009 IOSPIRIT GmbH. All rights reserved.
+//  Copyright 2009-2011 IOSPIRIT GmbH. All rights reserved.
 //
 
 #import <Cocoa/Cocoa.h>
