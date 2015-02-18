@@ -20,9 +20,9 @@
 		DC74BB2E107E2D7600616791 /* remoteButtonRight.png in Resources */ = {isa = PBXBuildFile; fileRef = DC74BB27107E2D7600616791 /* remoteButtonRight.png */; };
 		DC77207B10876E1A00FC8000 /* DemoController.m in Sources */ = {isa = PBXBuildFile; fileRef = DC77207810876E1A00FC8000 /* DemoController.m */; };
 		DC77207C10876E1A00FC8000 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = DC77207A10876E1A00FC8000 /* main.m */; };
+		DC7B03411A94B10900A0F571 /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DCDC22EE1080AB18001813E3 /* Carbon.framework */; };
 		DCDC1AC9107E3066001813E3 /* HIDRemote.m in Sources */ = {isa = PBXBuildFile; fileRef = DCDC1AC8107E3066001813E3 /* HIDRemote.m */; };
 		DCDC1ACE107E3075001813E3 /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DCDC1ACD107E3075001813E3 /* IOKit.framework */; };
-		DCDC22EF1080AB18001813E3 /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DCDC22EE1080AB18001813E3 /* Carbon.framework */; };
 		DCDC24A11080AE97001813E3 /* LICENSE.txt in Resources */ = {isa = PBXBuildFile; fileRef = DCDC24A01080AE97001813E3 /* LICENSE.txt */; };
 /* End PBXBuildFile section */
 
@@ -60,9 +60,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DC7B03411A94B10900A0F571 /* Carbon.framework in Frameworks */,
 				8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */,
 				DCDC1ACE107E3075001813E3 /* IOKit.framework in Frameworks */,
-				DCDC22EF1080AB18001813E3 /* Carbon.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -200,6 +200,8 @@
 /* Begin PBXProject section */
 		29B97313FDCFA39411CA2CEA /* Project object */ = {
 			isa = PBXProject;
+			attributes = {
+			};
 			buildConfigurationList = C01FCF4E08A954540054247B /* Build configuration list for PBXProject "HIDRemoteExample" */;
 			compatibilityVersion = "Xcode 3.1";
 			developmentRegion = English;
@@ -284,6 +286,7 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = HIDRemoteExample_Prefix.pch;
+				GCC_VERSION = "";
 				INFOPLIST_FILE = "HIDRemoteExample-Info.plist";
 				INSTALL_PATH = "$(HOME)/Applications";
 				PRODUCT_NAME = "HID Remote Example";
@@ -310,21 +313,14 @@
 				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_VERSION = 4.0;
-				"GCC_VERSION[sdk=macosx10.4][arch=*]" = 4.0;
-				"GCC_VERSION[sdk=macosx10.5][arch=*]" = "";
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_MISSING_PARENTHESES = YES;
 				GCC_WARN_SIGN_COMPARE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				"MACOSX_DEPLOYMENT_TARGET[sdk=macosx10.4][arch=*]" = 10.4;
-				"MACOSX_DEPLOYMENT_TARGET[sdk=macosx10.5][arch=*]" = 10.5;
+				MACOSX_DEPLOYMENT_TARGET = 10.4;
 				ONLY_ACTIVE_ARCH = NO;
 				PREBINDING = NO;
-				SDKROOT = macosx10.4;
-				"SDKROOT[arch=i386]" = macosx10.4;
-				"SDKROOT[arch=ppc]" = macosx10.4;
-				"SDKROOT[arch=x86_64]" = macosx10.5;
+				SDKROOT = macosx;
 			};
 			name = Debug;
 		};
@@ -333,21 +329,14 @@
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
-				GCC_VERSION = 4.0;
-				"GCC_VERSION[sdk=macosx10.4][arch=*]" = 4.0;
-				"GCC_VERSION[sdk=macosx10.5][arch=*]" = "";
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_MISSING_PARENTHESES = YES;
 				GCC_WARN_SIGN_COMPARE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				"MACOSX_DEPLOYMENT_TARGET[sdk=macosx10.4][arch=*]" = 10.4;
-				"MACOSX_DEPLOYMENT_TARGET[sdk=macosx10.5][arch=*]" = 10.5;
+				MACOSX_DEPLOYMENT_TARGET = 10.4;
 				ONLY_ACTIVE_ARCH = NO;
 				PREBINDING = NO;
-				SDKROOT = macosx10.4;
-				"SDKROOT[arch=i386]" = macosx10.4;
-				"SDKROOT[arch=ppc]" = macosx10.4;
-				"SDKROOT[arch=x86_64]" = macosx10.5;
+				SDKROOT = macosx;
 			};
 			name = Release;
 		};

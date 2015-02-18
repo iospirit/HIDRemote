@@ -150,6 +150,9 @@
 		case kHIDRemoteButtonCodeMenuHold:
 			return (@"Menu (hold)");
 		break;
+		
+		default:
+		break;
 	}
 	
 	return ([NSString stringWithFormat:@"Button %x", (int)buttonCode]);
@@ -165,15 +168,15 @@
 	switch ([theHidRemote lastSeenModel])
 	{
 		case kHIDRemoteModelUndetermined:
-			remoteModel = [NSString stringWithFormat:@"Undetermined:%d", [theHidRemote lastSeenRemoteControlID]];
+			remoteModel = [NSString stringWithFormat:@"Undetermined:%d", (int)[theHidRemote lastSeenRemoteControlID]];
 		break;
 
 		case kHIDRemoteModelAluminum:
-			remoteModel = [NSString stringWithFormat:@"Aluminum:%d", [theHidRemote lastSeenRemoteControlID]];
+			remoteModel = [NSString stringWithFormat:@"Aluminum:%d", (int)[theHidRemote lastSeenRemoteControlID]];
 		break;
 
 		case kHIDRemoteModelWhitePlastic:
-			remoteModel = [NSString stringWithFormat:@"White Plastic:%d", [theHidRemote lastSeenRemoteControlID]];
+			remoteModel = [NSString stringWithFormat:@"White Plastic:%d", (int)[theHidRemote lastSeenRemoteControlID]];
 		break;
 	}
 
@@ -205,7 +208,7 @@
 #pragma mark -- HID Remote code (usage of optional features) --
 - (void)hidRemote:(HIDRemote *)aHidRemote remoteIDChangedOldID:(SInt32)old newID:(SInt32)newID forHardwareWithAttributes:(NSMutableDictionary *)attributes
 {
-	[self appendToLog:[NSString stringWithFormat:@"Change of remote ID from %d to %d (for %@ by %@ (Transport: %@))", old, newID, [attributes objectForKey:kHIDRemoteProduct], [attributes objectForKey:kHIDRemoteManufacturer], [attributes objectForKey:kHIDRemoteTransport]]];
+	[self appendToLog:[NSString stringWithFormat:@"Change of remote ID from %d to %d (for %@ by %@ (Transport: %@))", (int)old, (int)newID, [attributes objectForKey:kHIDRemoteProduct], [attributes objectForKey:kHIDRemoteManufacturer], [attributes objectForKey:kHIDRemoteTransport]]];
 }
 
 // Notification about hardware additions/removals 
@@ -363,6 +366,8 @@
 		{
 			// Reliable usage of the remote in this mode under this operating system version
 			// requires the Candelair driver to be installed. Tell the user about it.
+			#pragma clang diagnostic push
+			#pragma clang diagnostic ignored "-Wdeprecated-declarations"
 			NSAlert *alert;
 			
 			if ((alert = [NSAlert alertWithMessageText:NSLocalizedString(@"Candelair driver installation necessary", @"")
@@ -382,6 +387,7 @@
 					break;
 				}
 			}
+			#pragma clang diagnostic pop
 		}	
 		else
 		{
@@ -389,7 +395,7 @@
 			if ([hidRemote startRemoteControl:remoteMode])
 			{
 				// Start was successful, perform UI changes and log it.
-				[self appendToLog:[NSString stringWithFormat:@"-- Starting HID Remote in %@ mode successful --", remoteModeName]];
+				[self appendToLog:[NSString stringWithFormat:@"-- Starting HID Remote in %@ mode (OS X %lx) successful --", remoteModeName, (unsigned long)[HIDRemote OSXVersion]]];
 				[startStopButton setTitle:@"Stop"];
 				[modeButton setEnabled:NO];
 			}

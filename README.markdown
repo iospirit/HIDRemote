@@ -1,6 +1,6 @@
 ## About the HIDRemote class
 
-The HIDRemote Objective-C class provides your application with access to the Apple® Remote IR Receiver under OS X 10.4 (Tiger), OS X 10.5 (Leopard) and OS X 10.6 (Snow Leopard). It is available under a BSD-style license.
+The HIDRemote Objective-C class provides your application with access to the Apple® Remote IR Receiver under OS X 10.4 (Tiger) up to OS X 10.10 (Yosemite). It is available under a BSD-style license.
 
 ## Why you'll want to use the HIDRemote class
 
@@ -39,4 +39,4 @@ Built from ground up to support multiple devices, the HIDRemote class enables ap
 The HIDRemote class generally works completely independant from Candelair. It, however, needs the support of Candelair under OS releases where establishing an exclusive lock on the IR Receiver is otherwise not possible (currently this is only the case under 10.6 and 10.6.1). For your convenience, the HIDRemote class provides a method that can be used to determine whether Candelair is required under a particular OS release. An example on how to use it is part of the sample code accompanying the HIDRemote class download and the HIDRemote guide.
 
 ### 32- and 64-Bit compatible
-Can be used by 32- and 64-Bit applications. Compatible with the new Snow Leopard 32 and 64-Bit kernels.
+Can be used by 32- and 64-Bit applications. Compatible with 32-Bit and 64-Bit kernels.
