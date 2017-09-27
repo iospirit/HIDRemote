@@ -1,32 +1,32 @@
 //
-//  HIDRemote.h
-//  HIDRemote V1.4 (18th February 2015)
+//  HIDRemote.m
+//  HIDRemote V1.6 (27th September 2017)
 //
 //  Created by Felix Schwarz on 06.04.07.
-//  Copyright 2007-2015 IOSPIRIT GmbH. All rights reserved.
+//  Copyright 2007-2017 IOSPIRIT GmbH. All rights reserved.
 //
 //  The latest version of this class is available at
 //     http://www.iospirit.com/developers/hidremote/
 //
 //  ** LICENSE *************************************************************************
 //
-//  Copyright (c) 2007-2014 IOSPIRIT GmbH (http://www.iospirit.com/)
+//  Copyright (c) 2007-2017 IOSPIRIT GmbH (http://www.iospirit.com/)
 //  All rights reserved.
-//  
+//
 //  Redistribution and use in source and binary forms, with or without modification,
 //  are permitted provided that the following conditions are met:
-//  
+//
 //  * Redistributions of source code must retain the above copyright notice, this list
 //    of conditions and the following disclaimer.
-//  
+//
 //  * Redistributions in binary form must reproduce the above copyright notice, this
 //    list of conditions and the following disclaimer in the documentation and/or other
 //    materials provided with the distribution.
-//  
+//
 //  * Neither the name of IOSPIRIT GmbH nor the names of its contributors may be used to
 //    endorse or promote products derived from this software without specific prior
 //    written permission.
-//  
+//
 //  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY
 //  EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
 //  OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT
@@ -39,7 +39,6 @@
 //  DAMAGE.
 //
 //  ************************************************************************************
-
 
 //  ************************************************************************************
 //  ********************************** DOCUMENTATION ***********************************
@@ -67,6 +66,15 @@
 #include <Carbon/Carbon.h>
 #endif
 
+#ifndef HIDREMOTE_THREADSAFETY_HARDENED_NOTIFICATION_HANDLING
+	#if MAC_OS_X_VERSION_MIN_REQUIRED >= MAC_OS_X_VERSION_10_5
+		// Enable thread-safe notification handling by default if deploying to OS X >= 10.5
+		#define HIDREMOTE_THREADSAFETY_HARDENED_NOTIFICATION_HANDLING 1
+	#else
+		#define HIDREMOTE_THREADSAFETY_HARDENED_NOTIFICATION_HANDLING 0
+	#endif
+#endif
+
 #include <unistd.h>
 #include <mach/mach.h>
 #include <sys/types.h>
@@ -81,8 +89,10 @@
 #include <IOKit/hidsystem/IOHIDParameter.h>
 #include <IOKit/hidsystem/IOHIDShared.h>
 
-#pragma mark -- Enums / Codes  --
+#pragma mark - Enums / Codes
 
+#ifndef HID_REMOTE_MODE_ENUM
+#define HID_REMOTE_MODE_ENUM 1
 typedef enum
 {
 	kHIDRemoteModeNone = 0L,
@@ -94,6 +104,7 @@ typedef enum
 	kHIDRemoteModeExclusiveAuto	// Try to acquire an exclusive lock on the remote whenever the application has focus. Temporarily release control over the
 					// remote when another application has focus (RECOMMENDED)
 } HIDRemoteMode;
+#endif /* HID_REMOTE_MODE_ENUM */
 
 typedef enum
 {
@@ -161,7 +172,7 @@ typedef enum
 
 @class HIDRemote;
 
-#pragma mark -- Delegate protocol (mandatory) --
+#pragma mark - Delegate protocol (mandatory)
 @protocol HIDRemoteDelegate
 
 // Notification of button events
@@ -209,8 +220,7 @@ typedef enum
 @end 
 
 
-#pragma mark -- Actual header file for class  --
-
+#pragma mark - Actual header file for class
 @interface HIDRemote : NSObject
 {
 	// IOMasterPort
@@ -270,21 +280,21 @@ typedef enum
 	BOOL _isStopping;
 	
 	// Thread safety
-	#ifdef HIDREMOTE_THREADSAFETY_HARDENED_NOTIFICATION_HANDLING /* #define HIDREMOTE_THREADSAFETY_HARDENED_NOTIFICATION_HANDLING if you're running your HIDRemote instance on a background thread (requires OS X 10.5 or later) */
+	#if HIDREMOTE_THREADSAFETY_HARDENED_NOTIFICATION_HANDLING /* #define HIDREMOTE_THREADSAFETY_HARDENED_NOTIFICATION_HANDLING if you're running your HIDRemote instance on a background thread (requires OS X 10.5 or later) */
 	NSThread *_runOnThread;
 	#endif
 }
 
-#pragma mark -- PUBLIC: Shared HID Remote --
+#pragma mark - PUBLIC: Shared HID Remote
 + (HIDRemote *)sharedHIDRemote;
 
-#pragma mark -- PUBLIC: System Information --
+#pragma mark - PUBLIC: System Information
 + (BOOL)isCandelairInstalled;
 + (BOOL)isCandelairInstallationRequiredForRemoteMode:(HIDRemoteMode)remoteMode;
 + (SInt32)OSXVersion;
 - (HIDRemoteAluminumRemoteSupportLevel)aluminiumRemoteSystemSupportLevel;
 
-#pragma mark -- PUBLIC: Interface / API --
+#pragma mark - PUBLIC: Interface / API
 - (BOOL)startRemoteControl:(HIDRemoteMode)hidRemoteMode;	
 - (void)stopRemoteControl;
 
@@ -307,7 +317,7 @@ typedef enum
 - (void)setUnusedButtonCodes:(NSArray *)newArrayWithUnusedButtonCodesAsNSNumbers;
 - (NSArray *)unusedButtonCodes;
 
-#pragma mark -- PUBLIC: Expert APIs --
+#pragma mark - PUBLIC: Expert APIs
 - (void)setEnableSecureEventInputWorkaround:(BOOL)newEnableSecureEventInputWorkaround;
 - (BOOL)enableSecureEventInputWorkaround;
 
@@ -317,28 +327,28 @@ typedef enum
 - (BOOL)isApplicationTerminating;
 - (BOOL)isStopping;
 
-#pragma mark -- PRIVATE: HID Event handling --
+#pragma mark - PRIVATE: HID Event handling
 - (void)_handleButtonCode:(HIDRemoteButtonCode)buttonCode isPressed:(BOOL)isPressed hidAttribsDict:(NSMutableDictionary *)hidAttribsDict;
 - (void)_sendButtonCode:(HIDRemoteButtonCode)buttonCode isPressed:(BOOL)isPressed hidAttribsDict:(NSMutableDictionary *)hidAttribsDict;
 - (void)_hidEventFor:(io_service_t)hidDevice from:(IOHIDQueueInterface **)interface withResult:(IOReturn)result;
 
-#pragma mark -- PRIVATE: Service setup and destruction --
+#pragma mark - PRIVATE: Service setup and destruction
 - (BOOL)_prematchService:(io_object_t)service;
 - (HIDRemoteButtonCode)buttonCodeForUsage:(unsigned int)usage usagePage:(unsigned int)usagePage;
 - (BOOL)_setupService:(io_object_t)service;
 - (void)_destructService:(io_object_t)service;
 
-#pragma mark -- PRIVATE: Distributed notifiations handling --
+#pragma mark - PRIVATE: Distributed notifiations handling
 - (void)_postStatusWithAction:(NSString *)action;
 - (void)_handleNotifications:(NSNotification *)notification;
 - (void)_setSendStatusNotifications:(BOOL)doSend;
 - (BOOL)_sendStatusNotifications;
 
-#pragma mark -- PRIVATE: Application becomes active / inactive handling for kHIDRemoteModeExclusiveAuto --
+#pragma mark - PRIVATE: Application becomes active / inactive handling for kHIDRemoteModeExclusiveAuto
 - (void)_appStatusChanged:(NSNotification *)notification;
 - (void)_delayedAutoRecovery:(NSTimer *)aTimer;
 
-#pragma mark -- PRIVATE: Notification handling --
+#pragma mark - PRIVATE: Notification handling
 - (void)_serviceMatching:(io_iterator_t)iterator;
 - (void)_serviceNotificationFor:(io_service_t)service messageType:(natural_t)messageType messageArgument:(void *)messageArgument;
 - (void)_updateSessionInformation;
@@ -346,12 +356,12 @@ typedef enum
 
 @end
 
-#pragma mark -- Information attribute keys --
+#pragma mark - Information attribute keys
 extern NSString *kHIDRemoteManufacturer;
 extern NSString *kHIDRemoteProduct;
 extern NSString *kHIDRemoteTransport;
 
-#pragma mark -- Internal/Expert attribute keys (AKA: don't touch these unless you really, really, REALLY know what you do) --
+#pragma mark - Internal/Expert attribute keys (AKA: don't touch these unless you really, really, REALLY know what you do)
 extern NSString *kHIDRemoteCFPluginInterface;
 extern NSString *kHIDRemoteHIDDeviceInterface;
 extern NSString *kHIDRemoteCookieButtonCodeLUT;
@@ -365,14 +375,14 @@ extern NSString *kHIDRemoteSimulateHoldEventsOriginButtonCode;
 extern NSString *kHIDRemoteAluminumRemoteSupportLevel;
 extern NSString *kHIDRemoteAluminumRemoteSupportOnDemand;
 
-#pragma mark -- Distributed notifications --
+#pragma mark - Distributed notifications
 extern NSString *kHIDRemoteDNHIDRemotePing;
 extern NSString *kHIDRemoteDNHIDRemoteRetry;
 extern NSString *kHIDRemoteDNHIDRemoteStatus;
 
 extern NSString *kHIDRemoteDNHIDRemoteRetryGlobalObject;
 
-#pragma mark -- Distributed notifications userInfo keys and values --
+#pragma mark - Distributed notifications userInfo keys and values
 extern NSString *kHIDRemoteDNStatusHIDRemoteVersionKey;
 extern NSString *kHIDRemoteDNStatusPIDKey;
 extern NSString *kHIDRemoteDNStatusModeKey;
@@ -385,8 +395,11 @@ extern NSString *kHIDRemoteDNStatusActionStop;
 extern NSString *kHIDRemoteDNStatusActionUpdate;
 extern NSString *kHIDRemoteDNStatusActionNoNeed;
 
-#pragma mark -- Driver compatibility flags --
+#pragma mark - Driver compatibility flags
+#ifndef HID_REMOTE_COMPATIBILITY_FLAGS_ENUM
+#define HID_REMOTE_COMPATIBILITY_FLAGS_ENUM 1
 typedef enum
 {
 	kHIDRemoteCompatibilityFlagsStandardHIDRemoteDevice = 1L,
 } HIDRemoteCompatibilityFlags;
+#endif /* HID_REMOTE_COMPATIBILITY_FLAGS_ENUM */

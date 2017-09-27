@@ -18,8 +18,8 @@
 		DC74BB2C107E2D7600616791 /* remoteButtonSelect.png in Resources */ = {isa = PBXBuildFile; fileRef = DC74BB25107E2D7600616791 /* remoteButtonSelect.png */; };
 		DC74BB2D107E2D7600616791 /* remoteButtonUp.png in Resources */ = {isa = PBXBuildFile; fileRef = DC74BB26107E2D7600616791 /* remoteButtonUp.png */; };
 		DC74BB2E107E2D7600616791 /* remoteButtonRight.png in Resources */ = {isa = PBXBuildFile; fileRef = DC74BB27107E2D7600616791 /* remoteButtonRight.png */; };
-		DC77207B10876E1A00FC8000 /* DemoController.m in Sources */ = {isa = PBXBuildFile; fileRef = DC77207810876E1A00FC8000 /* DemoController.m */; };
-		DC77207C10876E1A00FC8000 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = DC77207A10876E1A00FC8000 /* main.m */; };
+		DC77207B10876E1A00FC8000 /* DemoController.m in Sources */ = {isa = PBXBuildFile; fileRef = DC77207810876E1A00FC8000 /* DemoController.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		DC77207C10876E1A00FC8000 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = DC77207A10876E1A00FC8000 /* main.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		DC7B03411A94B10900A0F571 /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DCDC22EE1080AB18001813E3 /* Carbon.framework */; };
 		DCDC1AC9107E3066001813E3 /* HIDRemote.m in Sources */ = {isa = PBXBuildFile; fileRef = DCDC1AC8107E3066001813E3 /* HIDRemote.m */; };
 		DCDC1ACE107E3075001813E3 /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DCDC1ACD107E3075001813E3 /* IOKit.framework */; };
@@ -279,6 +279,9 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ENABLE_OBJC_ARC = NO;
+				"CLANG_ENABLE_OBJC_ARC[arch=i386]" = NO;
+				"CLANG_ENABLE_OBJC_ARC[arch=x86_64]" = YES;
 				COPY_PHASE_STRIP = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_FIX_AND_CONTINUE = YES;
@@ -289,6 +292,7 @@
 				GCC_VERSION = "";
 				INFOPLIST_FILE = "HIDRemoteExample-Info.plist";
 				INSTALL_PATH = "$(HOME)/Applications";
+				MACOSX_DEPLOYMENT_TARGET = 10.6;
 				PRODUCT_NAME = "HID Remote Example";
 			};
 			name = Debug;
@@ -297,12 +301,15 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				"CLANG_ENABLE_OBJC_ARC[arch=i386]" = NO;
+				"CLANG_ENABLE_OBJC_ARC[arch=x86_64]" = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_MODEL_TUNING = G5;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = HIDRemoteExample_Prefix.pch;
 				INFOPLIST_FILE = "HIDRemoteExample-Info.plist";
 				INSTALL_PATH = "$(HOME)/Applications";
+				MACOSX_DEPLOYMENT_TARGET = 10.6;
 				PRODUCT_NAME = "HID Remote Example";
 			};
 			name = Release;
