@@ -1,9 +1,9 @@
 //
 //  HIDRemote.m
-//  HIDRemote V1.6 (27th September 2017)
+//  HIDRemote V1.7 (5th September 2018)
 //
 //  Created by Felix Schwarz on 06.04.07.
-//  Copyright 2007-2017 IOSPIRIT GmbH. All rights reserved.
+//  Copyright 2007-2018 IOSPIRIT GmbH. All rights reserved.
 //
 //  The latest version of this class is available at
 //     http://www.iospirit.com/developers/hidremote/
@@ -1067,11 +1067,23 @@ static HIDRemote *sHIDRemote = nil;
 				break;
 
 				case kHIDUsage_GD_SystemMenuUp:
-					buttonCode = kHIDRemoteButtonCodeUp;
+					// macOS 10.13.6 posts kHIDUsage_GD_SystemMenuUp alongside kHIDUsage_Csmr_VolumeIncrement,
+					// which ends up being interpreted as a double press. To avoid this, this usage is ignored
+					// when running under 10.13.6 and later.
+					if ([HIDRemote OSXVersion] < 0x10d6)
+					{
+						buttonCode = kHIDRemoteButtonCodeUp;
+					}
 				break;
 
 				case kHIDUsage_GD_SystemMenuDown:
-					buttonCode = kHIDRemoteButtonCodeDown;
+					// macOS 10.13.6 posts kHIDUsage_GD_SystemMenuDown alongside kHIDUsage_Csmr_VolumeDecrement,
+					// which ends up being interpreted as a double press. To avoid this, this usage is ignored
+					// when running under 10.13.6 and later.
+					if ([HIDRemote OSXVersion] < 0x10d6)
+					{
+						buttonCode = kHIDRemoteButtonCodeDown;
+					}
 				break;
 			}
 		break;

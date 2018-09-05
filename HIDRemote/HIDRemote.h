@@ -1,9 +1,9 @@
 //
 //  HIDRemote.m
-//  HIDRemote V1.6 (27th September 2017)
+//  HIDRemote V1.7 (5th September 2018)
 //
 //  Created by Felix Schwarz on 06.04.07.
-//  Copyright 2007-2017 IOSPIRIT GmbH. All rights reserved.
+//  Copyright 2007-2018 IOSPIRIT GmbH. All rights reserved.
 //
 //  The latest version of this class is available at
 //     http://www.iospirit.com/developers/hidremote/
